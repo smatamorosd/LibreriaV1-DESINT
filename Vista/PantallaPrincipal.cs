@@ -51,6 +51,7 @@ cbxTemas.Text = "Accion";
 
 //btnAlta.PerformClick();
 
+
             //FIN DEBUG
 
         }
@@ -89,15 +90,20 @@ cbxTemas.Text = "Accion";
         private void lstLibros_Click(object sender, EventArgs e)
         {
             if (lstLibros.SelectedItem != null)
+            {
                 EnviarDatosAPantalla(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
+            }
                     
         }
            
         private void btnBaja_Click(object sender, EventArgs e)
         {
-            acceso.borrarLibro(lstLibros.SelectedItem.ToString());
-            lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
-            VaciarPantalla();                    
+            if(lstLibros.SelectedItem != null) 
+            {
+                acceso.borrarLibro(lstLibros.SelectedItem.ToString());
+                lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
+                VaciarPantalla();              
+            }
         }
         
         private void txtPaginas_KeyPress(object sender, KeyPressEventArgs e)

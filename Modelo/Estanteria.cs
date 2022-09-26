@@ -102,14 +102,12 @@ public class Estanteria
 	 * Puesto que para borrar necesito una posici�n exacta, llamo al metodo buscarLibro que me la devuelve a 
 	 * trav�s de un nombre
 	 */
-    public int borrarLibro(String nombre)
+    public void borrarLibro(String nombre)
     {
         int loc = posicionLibro(nombre);
 
         libros[loc] = libros[reg - 1];
         reg--;
-
-        return 1;
     }
 
     /// <summary>

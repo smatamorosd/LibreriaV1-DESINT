@@ -36,7 +36,4 @@ namespace LibreriaV3._1.Modelo
        }
 
     }
-
-    
-
 }
