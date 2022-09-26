@@ -67,6 +67,7 @@ namespace LibreriaV3._1
             {
                 MostrarMensaje(NOESPACIO);
             }
+	    VaciarPantalla();
         }
         
         private void BtnSalir_Click(object sender, EventArgs e)
