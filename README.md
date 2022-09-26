@@ -16,5 +16,3 @@ Null al darle a lstLibros
         }
         return response;
     }
-jj
-dsadsd
