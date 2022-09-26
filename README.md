@@ -16,3 +16,16 @@ Null al darle a lstLibros
         }
         return response;
     }
+    
+     public void BorrarLibro(String titulo)
+        {
+            int posicionLibro = PosicionLibro(titulo);
+            if (posicionLibro != -1)
+            {
+                for (int i = posicionLibro; i < libros.Length - 1; i++)
+                {
+                    libros[i] = libros[i + 1];
+                }
+            }
+            libros[libros.Length - 1] = null;
+        }
