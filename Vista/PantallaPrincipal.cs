@@ -49,7 +49,7 @@ chkRustica.Checked = false;
 chkTapaDura.Checked = false;
 cbxTemas.Text = "Accion";
 
-btnAlta.PerformClick();
+//btnAlta.PerformClick();
 
             //FIN DEBUG
 
@@ -88,7 +88,8 @@ btnAlta.PerformClick();
 
         private void lstLibros_Click(object sender, EventArgs e)
         {
-            EnviarDatosAPantalla(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
+            if (lstLibros.SelectedItem != null)
+                EnviarDatosAPantalla(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
                     
         }
            
