@@ -1,6 +1,8 @@
 # LibreriaV1-DESINT
 
 
+TODO: comentar los cambios de front
+
 Cambios:
 
 Null al darle a lstLibros
