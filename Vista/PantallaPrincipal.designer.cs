@@ -55,7 +55,6 @@
             this.btnNuevo = new System.Windows.Forms.Button();
             this.btnAlta = new System.Windows.Forms.Button();
             this.lstLibros = new System.Windows.Forms.ListBox();
-            this.lblMensaje = new System.Windows.Forms.Label();
             this.Formato.SuspendLayout();
             this.Estado.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -141,7 +140,7 @@
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(242, 26);
             this.txtPrecio.TabIndex = 8;
-            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
+            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
             // 
             // label5
             // 
@@ -163,7 +162,7 @@
             this.txtPaginas.Name = "txtPaginas";
             this.txtPaginas.Size = new System.Drawing.Size(242, 26);
             this.txtPaginas.TabIndex = 10;
-            this.txtPaginas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPaginas_KeyPress);
+            this.txtPaginas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPaginas_KeyPress);
             // 
             // label6
             // 
@@ -320,7 +319,7 @@
             this.btnSalir.TabIndex = 4;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
             // btnModificar
             // 
@@ -332,7 +331,7 @@
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            this.btnModificar.Click += new System.EventHandler(this.BtnModificar_Click);
             // 
             // btnBaja
             // 
@@ -344,7 +343,7 @@
             this.btnBaja.TabIndex = 2;
             this.btnBaja.Text = "Baja";
             this.btnBaja.UseVisualStyleBackColor = true;
-            this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
+            this.btnBaja.Click += new System.EventHandler(this.BtnBaja_Click);
             // 
             // btnNuevo
             // 
@@ -356,7 +355,7 @@
             this.btnNuevo.TabIndex = 1;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
-            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // btnAlta
             // 
@@ -377,23 +376,13 @@
             this.lstLibros.Name = "lstLibros";
             this.lstLibros.Size = new System.Drawing.Size(226, 407);
             this.lstLibros.TabIndex = 17;
-            this.lstLibros.Click += new System.EventHandler(this.lstLibros_Click);
-            // 
-            // lblMensaje
-            // 
-            this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Location = new System.Drawing.Point(314, 18);
-            this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(55, 13);
-            this.lblMensaje.TabIndex = 18;
-            this.lblMensaje.Text = "Mensajes:";
+            this.lstLibros.Click += new System.EventHandler(this.LstLibros_Click);
             // 
             // PantallaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 549);
-            this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.lstLibros);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Estado);
@@ -455,7 +444,6 @@
         private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.ListBox lstLibros;
-        private System.Windows.Forms.Label lblMensaje;
     }
 }
 

@@ -38,75 +38,62 @@ namespace LibreriaV3._1
             //b = 3;
             //MessageBox.Show("Holaaaaaaaaaaaaaaaaaaa");
 
-            //DEBUG, añadimos libros...
-txtAutor.Text = "Autor1";
-txtPaginas.Text = "1";
-txtPrecio.Text = "1";
-txtTitulo.Text = "Titulo1";
-rbReedicion.Checked = false;
-chkCartone.Checked = false;
-chkRustica.Checked = false;
-chkTapaDura.Checked = false;
-cbxTemas.Text = "Accion";
-
-//btnAlta.PerformClick();
-
 
             //FIN DEBUG
 
         }
-        private void btnNuevo_Click(object sender, EventArgs e)
+        private void BtnNuevo_Click(object sender, EventArgs e)
         {
             VaciarPantalla();
         }
 
         private void BtnAlta_Click(object sender, EventArgs e)
         {
-            int estado = acceso.insertarLibro(RecogerDatosPantalla());
-            if (estado == 1)
+            int estado = acceso.InsertarLibro(RecogerDatosPantalla());
+            const string YAEXISTE = "El libro ya existe";
+            const string LBRCREADO = "Libro Creado Correctamente";
+            const string NOESPACIO = "No hay espacio para mas libros";
+
+            if (estado == Estanteria.INTRODUCIDO)
             {
                 lstLibros.Items.Add(txtTitulo.Text);
-                lblMensaje.Text = "Libro Creado Correctamente";
-                MessageBox.Show("Libro Creado Correctamente");
+                MostrarMensaje(LBRCREADO);
             }
-            else if (estado == -1)
+            else if (estado == Estanteria.LIBRO_EXISTE)
             {
-                lblMensaje.Text = "El libro ya existe";
-                MessageBox.Show("El libro ya existe");
+                MostrarMensaje(YAEXISTE);
             }
-            else if (estado == 0)
+            else if (estado == Estanteria.ESTANTERIA_LLENA)
             {
-                lblMensaje.Text = "No hay espacio para mas libros";
-                MessageBox.Show("No hay espacio para mas libros");
-
+                MostrarMensaje(NOESPACIO);
             }
         }
         
-        private void btnSalir_Click(object sender, EventArgs e)
+        private void BtnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void lstLibros_Click(object sender, EventArgs e)
+        private void LstLibros_Click(object sender, EventArgs e)
         {
             if (lstLibros.SelectedItem != null)
             {
-                EnviarDatosAPantalla(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
+                EnviarDatosAPantalla(acceso.BuscarLibro(lstLibros.SelectedItem.ToString()));
             }
                     
         }
            
-        private void btnBaja_Click(object sender, EventArgs e)
+        private void BtnBaja_Click(object sender, EventArgs e)
         {
             if(lstLibros.SelectedItem != null) 
             {
-                acceso.borrarLibro(lstLibros.SelectedItem.ToString());
+                acceso.BorrarLibro(lstLibros.SelectedItem.ToString());
                 lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
                 VaciarPantalla();              
             }
         }
         
-        private void txtPaginas_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtPaginas_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
@@ -114,7 +101,7 @@ cbxTemas.Text = "Accion";
             }
         }
 
-        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 (e.KeyChar != '.') && (e.KeyChar != ','))
@@ -133,21 +120,25 @@ cbxTemas.Text = "Accion";
             }
         }
         
-        private void btnModificar_Click(object sender, EventArgs e)
+        private void BtnModificar_Click(object sender, EventArgs e)
         {
         //* Si estado es -1 indica que el libro no se ha encontrado.
         //* Cualquier otro valor devuelto, indicará que el libro se ha encontrado y la insercción ha sido correcta.
-            int estado = acceso.modificarLibro(RecogerDatosPantalla());
-            if (estado == -1)
+            if (lstLibros.SelectedItem != null)
             {
-                lblMensaje.Text = "Libro no encontrado";
-                MessageBox.Show("Libro no encontrado");
+                int estado = acceso.ModificarLibro(RecogerDatosPantalla());
+                const string notFound = "Libro no encontrado";
+                const string modificado = "Libro Modificado Correctamente";
 
-                return;
+                if (estado == -1)
+                {
+                    MostrarMensaje(notFound);
+                    return;
+                }
+
+                MostrarMensaje(modificado);
             }
 
-            lblMensaje.Text = "Libro Modificado Correctamente";
-            MessageBox.Show("Libro Modificado Correctamente");
         }
         //*****************************  MÉTODOS  PRIVADOS INTERNOS DE LA CLASE  ******************
 
@@ -158,6 +149,7 @@ cbxTemas.Text = "Accion";
 
         private Libro RecogerDatosPantalla()
         {
+            
             Libro libro = null;
             string titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
             titulo = txtTitulo.Text;
@@ -169,7 +161,10 @@ cbxTemas.Text = "Accion";
             formatoUno = chkCartone.Checked ? chkCartone.Text : "N/A";
             formatoDos = chkRustica.Checked ? chkRustica.Text : "N/A";
             formatoTres = chkTapaDura.Checked ? chkTapaDura.Text : "N/A";
-            tema = cbxTemas.SelectedItem.ToString();
+            tema = cbxTemas.SelectedItem == null 
+                ? "Accion" 
+                :  cbxTemas.SelectedItem.ToString();
+
             if (rbNovedad.Checked)
             {
                 estado = "novedad";
@@ -177,6 +172,11 @@ cbxTemas.Text = "Accion";
             else
             {
                 estado = "reedicion";
+            }
+
+            if (!chkCartone.Checked && !chkRustica.Checked && !chkTapaDura.Checked)
+            {
+                MostrarMensaje("Es necesario rellenar el formato");
             }
 
             if (titulo.Count() != 0 && paginas.Count() != 0 && titulo.Count() != 0 && precio.Count() != 0)
@@ -229,6 +229,11 @@ cbxTemas.Text = "Accion";
             chkRustica.Checked = false;
             chkTapaDura.Checked = false;
             cbxTemas.SelectedIndex = -1; //Borramos el texto del tema...
+        }
+        private void MostrarMensaje(string mensaje)
+        {
+            txtMensaje.Text = mensaje;
+            MessageBox.Show(mensaje);
         }
     }
 }
