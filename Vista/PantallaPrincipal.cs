@@ -55,16 +55,15 @@ namespace LibreriaV2._1
 
             bool estado = acceso.insertarLibro(datosPantalla);
 
-            if (estado)
-            {
-                lstLibros.Items.Add(txtTitulo.Text);
-                MostrarMensaje(Mensajes.MSG_INSERTADO);
-            }
-            else
+            if (!estado)
             {
                 MostrarMensaje(Mensajes.MSG_YAEXISTE);
+                return;
             }
-	        VaciarPantalla();
+
+            lstLibros.Items.Add(txtTitulo.Text);
+            MostrarMensaje(Mensajes.MSG_INSERTADO);
+            VaciarPantalla();
         }
         
         private void BtnSalir_Click(object sender, EventArgs e)

@@ -191,13 +191,6 @@
             this.cbxTemas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTemas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxTemas.FormattingEnabled = true;
-            this.cbxTemas.Items.AddRange(new object[] {
-            "Accion",
-            "Informatica",
-            "Aventura",
-            "Romantica",
-            "Tupidora",
-            "Ficion"});
             this.cbxTemas.Location = new System.Drawing.Point(92, 153);
             this.cbxTemas.Margin = new System.Windows.Forms.Padding(2);
             this.cbxTemas.Name = "cbxTemas";
