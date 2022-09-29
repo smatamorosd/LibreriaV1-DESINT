@@ -1,4 +1,4 @@
-﻿using LibreriaV3._1.Modelo;
+﻿using LibreriaV2._1.Modelo;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,7 +14,7 @@ using System.Windows.Forms;
  * 
 */
 
-namespace LibreriaV3._1
+namespace LibreriaV2._1
 {
     public partial class PantallaPrincipal : Form
     {
@@ -33,14 +33,14 @@ namespace LibreriaV3._1
             // arranca la aplicación y los métodos por los que pasa, en nuestro caso por el constructor
             // PantallaPrincipal()
 
-            //int a,b;
-            //a = 2;
-            //b = 3;
-            //MessageBox.Show("Holaaaaaaaaaaaaaaaaaaa");
-
-
-            //FIN DEBUG
-
+            //Añadimos los temas
+            cbxTemas.Items.Add("Acción");
+            cbxTemas.Items.Add("Informatica");
+            cbxTemas.Items.Add("Aventura");
+            cbxTemas.Items.Add("Romantica");
+            cbxTemas.Items.Add("Tupidora");
+            cbxTemas.Items.Add("Ficción");
+            cbxTemas.Items.Add("Acción");
         }
         private void BtnNuevo_Click(object sender, EventArgs e)
         {
@@ -49,37 +49,34 @@ namespace LibreriaV3._1
 
         private void BtnAlta_Click(object sender, EventArgs e)
         {
-            int estado = acceso.InsertarLibro(RecogerDatosPantalla());
-            const string YAEXISTE = "El libro ya existe";
-            const string LBRCREADO = "Libro Creado Correctamente";
-            const string NOESPACIO = "No hay espacio para mas libros";
+            Libro datosPantalla = RecogerDatosPantalla();
 
-            if (estado == Estanteria.INTRODUCIDO)
+            if (datosPantalla == null) return;
+
+            bool estado = acceso.insertarLibro(datosPantalla);
+
+            if (estado)
             {
                 lstLibros.Items.Add(txtTitulo.Text);
-                MostrarMensaje(LBRCREADO);
+                MostrarMensaje(Mensajes.MSG_INSERTADO);
             }
-            else if (estado == Estanteria.LIBRO_EXISTE)
+            else
             {
-                MostrarMensaje(YAEXISTE);
+                MostrarMensaje(Mensajes.MSG_YAEXISTE);
             }
-            else if (estado == Estanteria.ESTANTERIA_LLENA)
-            {
-                MostrarMensaje(NOESPACIO);
-            }
-	    VaciarPantalla();
+	        VaciarPantalla();
         }
         
         private void BtnSalir_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Environment.Exit(0);
         }
 
         private void LstLibros_Click(object sender, EventArgs e)
         {
             if (lstLibros.SelectedItem != null)
             {
-                EnviarDatosAPantalla(acceso.BuscarLibro(lstLibros.SelectedItem.ToString()));
+                EnviarDatosAPantalla(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
             }
                     
         }
@@ -88,7 +85,7 @@ namespace LibreriaV3._1
         {
             if(lstLibros.SelectedItem != null) 
             {
-                acceso.BorrarLibro(lstLibros.SelectedItem.ToString());
+                acceso.borrarLibro(lstLibros.SelectedItem.ToString());
                 lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
                 VaciarPantalla();              
             }
@@ -127,17 +124,22 @@ namespace LibreriaV3._1
         //* Cualquier otro valor devuelto, indicará que el libro se ha encontrado y la insercción ha sido correcta.
             if (lstLibros.SelectedItem != null)
             {
-                int estado = acceso.ModificarLibro(RecogerDatosPantalla());
-                const string notFound = "Libro no encontrado";
-                const string modificado = "Libro Modificado Correctamente";
+                bool estado = acceso.modificarLibro(
+                    lstLibros.SelectedItem.ToString(),
+                    RecogerDatosPantalla()
+                );
 
-                if (estado == -1)
+                if (!estado)
                 {
-                    MostrarMensaje(notFound);
+                    MostrarMensaje(Mensajes.MSG_NO_ENCONTRADO);
                     return;
                 }
 
-                MostrarMensaje(modificado);
+                //Actualizamos el lst....
+                lstLibros.Items.Remove(lstLibros.SelectedItem.ToString());
+                lstLibros.Items.Add(txtTitulo.Text);
+
+                MostrarMensaje(Mensajes.MSG_MODIFICADO);
             }
 
         }
@@ -150,9 +152,7 @@ namespace LibreriaV3._1
 
         private Libro RecogerDatosPantalla()
         {
-            
-            Libro libro = null;
-            string titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
+            String titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
             titulo = txtTitulo.Text;
             autor = txtAutor.Text;
             paginas = txtPaginas.Text;
@@ -162,9 +162,10 @@ namespace LibreriaV3._1
             formatoUno = chkCartone.Checked ? chkCartone.Text : "N/A";
             formatoDos = chkRustica.Checked ? chkRustica.Text : "N/A";
             formatoTres = chkTapaDura.Checked ? chkTapaDura.Text : "N/A";
-            tema = cbxTemas.SelectedItem == null 
-                ? "Accion" 
-                :  cbxTemas.SelectedItem.ToString();
+
+            tema = cbxTemas.SelectedItem == null
+                ? "N/A"
+                : cbxTemas.SelectedItem.ToString();
 
             if (rbNovedad.Checked)
             {
@@ -175,16 +176,26 @@ namespace LibreriaV3._1
                 estado = "reedicion";
             }
 
-            if (!chkCartone.Checked && !chkRustica.Checked && !chkTapaDura.Checked)
+            //Comprobaciones
+            if (titulo == "")
             {
-                MostrarMensaje("Es necesario rellenar el formato");
+                MostrarMensaje(Mensajes.MSG_ERRCAMPO_Titulo);
+                return null;
             }
 
-            if (titulo.Count() != 0 && paginas.Count() != 0 && titulo.Count() != 0 && precio.Count() != 0)
+            /*if (!chkCartone.Checked && !chkRustica.Checked && !chkTapaDura.Checked)
             {
-                libro = new Libro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
+                MostrarMensaje("Es necesario rellenar el formato");
+                return null;
+            }*/
+
+            if (autor == "" || paginas.Length == 0 || precio.Length == 0)
+            {
+                MostrarMensaje(Mensajes.MSG_ERRCAMPOS_VACIO);
+                return null;
             }
-            return libro;
+
+            return new Libro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
         }
 
         /*********************************************************************************************

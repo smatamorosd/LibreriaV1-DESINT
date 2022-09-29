@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lenguaje\Mensajes.cs" />
+    <Compile Include="Modelo\Estanteria-old.cs" />
     <Compile Include="Modelo\Estanteria.cs" />
     <Compile Include="Modelo\Libro.cs" />
     <Compile Include="Program.cs" />

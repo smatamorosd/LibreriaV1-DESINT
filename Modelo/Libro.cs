@@ -1,6 +1,6 @@
 ﻿
 
-namespace LibreriaV3._1.Modelo
+namespace LibreriaV2._1.Modelo
 {
     public class Libro
     {
@@ -13,7 +13,6 @@ namespace LibreriaV3._1.Modelo
         public string Formatodos { get; set; }
         public string Formatotres { get; set; }
         public string Estado { get; set; }
-        public string Borrado { get; set; }
 
         public Libro(string autor, string titulo, string tema, string paginas, string precio, string formatouno, string formatodos, string formatotres, string estado)
         {   
@@ -26,7 +25,6 @@ namespace LibreriaV3._1.Modelo
             this.Formatodos = formatodos;
             this.Formatotres = formatotres;
             this.Estado = estado;
-            this.Borrado = "0";
         }
         public Libro() { }
 

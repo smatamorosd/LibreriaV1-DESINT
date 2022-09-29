@@ -64,8 +64,8 @@ D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.csproj.AssemblyReference.cache
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.csproj.SuggestedBindingRedirects.cache
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.Properties.Resources.resources
-D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV3._1.PantallaPrincipal.resources
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.csproj.GenerateResource.cache
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.csproj.CoreCompileInputs.cache
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.exe
 D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV1.pdb
+D:\Desktop\Curso\DAM\2º Curso DAM\Desarrollo de Interfaces\LibreriaV1\LibreriaV1\obj\Debug\LibreriaV2._1.PantallaPrincipal.resources
