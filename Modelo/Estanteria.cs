@@ -1,60 +1,93 @@
 using LibreriaV2._1.Modelo;
-using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Windows.Forms;
+using System;
 
 public class Estanteria
 {
 
 
-    //ArrayList donde se almacena cada LIBRO
+    //ArrayList donde se almacena cada LIBRO 
+    //---IMPORTANTE- Se ha optado por utilizar el array de libros para manejar ficheros binarios,
+    // esto hace que la gestión sea más sencilla. No sería la mejor manera de gestionar los ficheros 
+    // si tuviésemos un gran número de registros. Al hacerlo de esta manera, estamos optando por una gestión 
+    // híbrida de los ficheros, utilizando un array de objetos como intermediario con el fichero.
+    // El fichero data.dat  se encuentra en la dirección  E:\~LibreriaV3\LibreriaV1\bin\Debug
+
     private List<Libro> libros = new List<Libro>();
 
-	//------------------------------METODOS 
-    /**
-	* Inserta un libro en un arrayList
-	* @param obLibro
-	* @return True/False
-	*/
-    public Boolean insertarLibro(Libro libro)
+    //--------------------------------------------------------------------------------------------------------
+    private const string DATA_FILENAME = "data.dat";
+    private BinaryFormatter formatter;
+    private FileStream readerFileStream = null;
+
+    //------------------------------METODOS 
+   
+    //Leer todas las filas del fichero y cargarlas en la lista
+    public List<Libro> cargarLibros()
     {
-        if (buscarLibro(libro.Titulo) == null)
+        List<Libro> libros = leerFichero();
+
+        return libros;
+    }
+
+    /**
+       * Inserta un libro en un arrayList
+       * @param obLibro
+       * @return True/False
+   */
+    public Boolean insertarLibro(Libro oblibro)
+    {
+        if (buscarLibro(oblibro.Titulo) == null)
         {
-            libros.Add(libro);
+            //Añadimos el libro al arraylist 
+            libros.Add(oblibro);
+
+            //Añadimos el registro del libro al fichero
+            escribirFichero(libros);
             return true;
         }
         return false;
-    }
+    }//insertarLibro
 
-     /**
-	 * Modifica un libro en el ArrayList. Primero se localiza y si se encuentra se borra y añade uno nuevo
-     * con los datos procedentes del objeto.
-	 */
-    public Boolean modificarLibro(String actualTitle, Libro libroModificar)   
+    /**
+    * Modifica un libro en el ArrayList. Primero se localiza y si se encuentra se borra y añade uno nuevo
+    * con los datos procedentes del objeto.
+    */
+    public Boolean modificarLibro(Libro oblibro)
     {
-        Libro libro = buscarLibro(actualTitle);
+        Libro libro = buscarLibro(oblibro.Titulo);
         if (libro != null)
         {
             libros.Remove(libro);
-            libros.Add(libroModificar);
+            libros.Add(oblibro);
+
+            //Reescribimos el fichero 
+            escribirFichero(libros);
+
             return true;
         }
         return false;
-    }
+    }//modificarLibro
 
     /**
-	 * Entra por parametros una String con un titulo, y te devuelve el objeto libro exacto
+	 * Entra por parametros el objeto libro devuelve dicho objeto si es encontrado en el arrayList
+     * que fue cargado desde un fichero.
 	 * @param nombre
 	 * @return
 	 */
-    public Libro buscarLibro(String titulo)
+    public Libro buscarLibro(String nombre)
     {
-        foreach (var libro in libros)
+        foreach (var oblibro in libros)
         {
-            if (libro.Titulo.Equals(titulo))
+            if (oblibro.Titulo.Equals(nombre))
             {
-                return libro;
+                return oblibro;
             }
-     
+
         }
         return null;
     }
@@ -64,14 +97,84 @@ public class Estanteria
      * @param nombre
      * @return True/False
      */
-    public Boolean borrarLibro(String titulo)
+    public Boolean borrarLibro(Libro oblibro)
     {
-        Libro libro = buscarLibro(titulo);
-        if(libro != null)
+        Boolean borrado = false;
+        Libro libro = buscarLibro(oblibro.Titulo);
+        if (libro != null)
         {
-            libros.Remove(libro);
-            return true;
+            libros.Remove(buscarLibro(oblibro.Titulo));
+            escribirFichero(libros);
+            borrado = true;
         }
-        return false;
+        return borrado;
+    }//borrarLibro*/
+
+    //*************************   Métodos PRIMITIVOS de FICHEROS  ***************************************************
+
+    public List<Libro> leerFichero()
+    {
+        formatter = new BinaryFormatter();
+        try
+        {
+            if (File.Exists(DATA_FILENAME))
+            {
+                readerFileStream = new FileStream(DATA_FILENAME, FileMode.Open, FileAccess.Read);
+                libros = (List<Libro>)formatter.Deserialize(readerFileStream);
+            } else {
+
+                ////////////////////////////////////////
+                ///             REFACTORIZAR          //
+                ////////////////////////////////////////
+                MessageBox.Show("Error, fichero no creado");
+
+                //Crear el fichero...
+                escribirFichero(null);
+
+            }
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Error fichero:" + e.Message);
+        }
+        finally
+        {
+            cerrarFichero();
+        }
+        return libros;
     }
-}
+
+    /// <summary>
+    /// Escribe un fichero de cero
+    /// </summary>
+    /// <param name="libros"></param>
+    private void escribirFichero(List<Libro> libros)
+    {
+        formatter = new BinaryFormatter();
+        try
+        {
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream stream = new FileStream(
+                DATA_FILENAME, FileMode.Create, FileAccess.Write, FileShare.None)
+            )
+            {
+
+                formatter.Serialize(stream, libros);
+            }
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Error fichero:" + e.Message);
+        }
+        finally
+        {
+            cerrarFichero();
+        }
+    }
+    private void cerrarFichero()
+    {
+        //readerFileStream.Flush();
+        readerFileStream.Close();
+        readerFileStream.Dispose();
+    }
+}//class

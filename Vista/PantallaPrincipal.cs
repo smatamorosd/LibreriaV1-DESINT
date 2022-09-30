@@ -1,5 +1,6 @@
 ﻿using LibreriaV2._1.Modelo;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -41,6 +42,15 @@ namespace LibreriaV2._1
             cbxTemas.Items.Add("Tupidora");
             cbxTemas.Items.Add("Ficción");
             cbxTemas.Items.Add("Acción");
+
+            //Cargamos los libros del fichero
+            List<Libro> libros = acceso.cargarLibros();
+
+            //Recorremos la lista y lo añadimos al ListBox
+            foreach(Libro libro in libros)
+            {
+                lstLibros.Items.Add(libro);
+            }
         }
         private void BtnNuevo_Click(object sender, EventArgs e)
         {
@@ -84,7 +94,7 @@ namespace LibreriaV2._1
         {
             if(lstLibros.SelectedItem != null) 
             {
-                acceso.borrarLibro(lstLibros.SelectedItem.ToString());
+                acceso.borrarLibro(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
                 lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
                 VaciarPantalla();              
             }
@@ -124,8 +134,7 @@ namespace LibreriaV2._1
             if (lstLibros.SelectedItem != null)
             {
                 bool estado = acceso.modificarLibro(
-                    lstLibros.SelectedItem.ToString(),
-                    RecogerDatosPantalla()
+                    acceso.buscarLibro(lstLibros.SelectedItem.ToString())
                 );
 
                 if (!estado)
