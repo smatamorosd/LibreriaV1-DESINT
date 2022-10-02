@@ -1,0 +1,17 @@
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\bin\Debug\net6.0-windows\Libreria-V3.exe
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\bin\Debug\net6.0-windows\Libreria-V3.deps.json
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\bin\Debug\net6.0-windows\Libreria-V3.runtimeconfig.json
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\bin\Debug\net6.0-windows\Libreria-V3.dll
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\bin\Debug\net6.0-windows\Libreria-V3.pdb
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.csproj.AssemblyReference.cache
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria_V3.PantallaPrincipal.resources
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.csproj.GenerateResource.cache
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.GeneratedMSBuildEditorConfig.editorconfig
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.AssemblyInfoInputs.cache
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.AssemblyInfo.cs
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.csproj.CoreCompileInputs.cache
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.dll
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\refint\Libreria-V3.dll
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.pdb
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\Libreria-V3.genruntimeconfig.cache
+E:\DAM2\DEDIN(DesarrolloDeInterfaces)\LibreriaV3--Tarea\Libreria-V3\obj\Debug\net6.0-windows\ref\Libreria-V3.dll
