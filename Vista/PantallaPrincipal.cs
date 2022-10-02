@@ -1,4 +1,4 @@
-﻿using LibreriaV2._1.Modelo;
+﻿using LibreriaV3._1.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Forms;
  * 
 */
 
-namespace LibreriaV2._1
+namespace LibreriaV3._1
 {
     public partial class PantallaPrincipal : Form
     {

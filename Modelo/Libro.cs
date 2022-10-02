@@ -2,7 +2,7 @@
 
 using System;
 
-namespace LibreriaV2._1.Modelo
+namespace LibreriaV3._1.Modelo
 {
     //Marcamos los objetos como serializables (en C# todos los objetos en session state
     //tienen que ser serializables).
@@ -35,7 +35,7 @@ namespace LibreriaV2._1.Modelo
 
        public override string ToString()
        {
-           return Titulo.ToUpper();
+           return Titulo;
        }
 
     }
