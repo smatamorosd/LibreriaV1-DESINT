@@ -95,7 +95,12 @@ namespace LibreriaV3._1
             if(lstLibros.SelectedItem != null) 
             {
                 acceso.borrarLibro(acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
-                lstLibros.Items.Remove(lstLibros.SelectedItem.ToString()); 
+
+                //lstLibros.Items.Remove(lstLibros.SelectedIndex); 
+
+                lstLibros.Items.RemoveAt(lstLibros.SelectedIndex);
+
+
                 VaciarPantalla();              
             }
         }
@@ -133,8 +138,13 @@ namespace LibreriaV3._1
         //* Cualquier otro valor devuelto, indicará que el libro se ha encontrado y la insercción ha sido correcta.
             if (lstLibros.SelectedItem != null)
             {
+                String lstSelectedItem = lstLibros.SelectedItem.ToString();
+
+                //Mandamos el nombre del libro seleccionado y recogemos
+                //los cambios que se han hecho en los inputs...
                 bool estado = acceso.modificarLibro(
-                    acceso.buscarLibro(lstLibros.SelectedItem.ToString())
+                    lstSelectedItem,
+                    RecogerDatosPantalla()
                 );
 
                 if (!estado)
@@ -144,8 +154,11 @@ namespace LibreriaV3._1
                 }
 
                 //Actualizamos el lst....
-                lstLibros.Items.Remove(lstLibros.SelectedItem.ToString());
+                //lstLibros.Items.Remove(lstSelectedItem);
+                lstLibros.Items.RemoveAt(lstLibros.SelectedIndex);
                 lstLibros.Items.Add(txtTitulo.Text);
+
+                //lstLibros.SetSelected(lstLibros.SelectedIndex - 1, true);
 
                 MostrarMensaje(Mensajes.MSG_MODIFICADO);
             }

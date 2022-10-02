@@ -57,12 +57,14 @@ public class Estanteria
     * Modifica un libro en el ArrayList. Primero se localiza y si se encuentra se borra y añade uno nuevo
     * con los datos procedentes del objeto.
     */
-    public Boolean modificarLibro(Libro oblibro)
+    public Boolean modificarLibro(String libroOld, Libro oblibro)
     {
-        Libro libro = buscarLibro(oblibro.Titulo);
+        Libro libro = buscarLibro(libroOld);
         if (libro != null)
         {
+            //Eliminamos el libro anterior
             libros.Remove(libro);
+            //Añadimos el libro modificado.
             libros.Add(oblibro);
 
             //Reescribimos el fichero 
