@@ -1,7 +1,12 @@
 ﻿
 
+using System;
+
 namespace LibreriaV2._1.Modelo
 {
+    //Marcamos los objetos como serializables (en C# todos los objetos en session state
+    //tienen que ser serializables).
+    [Serializable]
     public class Libro
     {
         public string Autor { get; set; }

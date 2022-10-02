@@ -120,16 +120,12 @@ public class Estanteria
             if (File.Exists(DATA_FILENAME))
             {
                 readerFileStream = new FileStream(DATA_FILENAME, FileMode.Open, FileAccess.Read);
+                readerFileStream.Position = 0;
                 libros = (List<Libro>)formatter.Deserialize(readerFileStream);
             } else {
 
-                ////////////////////////////////////////
-                ///             REFACTORIZAR          //
-                ////////////////////////////////////////
-                MessageBox.Show("Error, fichero no creado");
-
-                //Crear el fichero...
-                escribirFichero(null);
+                //Creamos el fichero 
+                readerFileStream = new FileStream(DATA_FILENAME, FileMode.CreateNew, FileAccess.Write);
 
             }
         }
