@@ -20,7 +20,7 @@ namespace Libreria_V2.Modelo
         */
         public Boolean InsertarLibro(Libro libro)
         {
-            if (BuscarLibro==null)
+            if (BuscarLibro!=null)
             {
                 libros.Add((libro));
                 return true;
