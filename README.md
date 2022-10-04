@@ -2,7 +2,7 @@
 
 
 - Se ha eliminado el toUpper del metodo toString de Libros. (podría causar errores)
-- Se añadió la creación del archivo cuando este mismo no existe.
+- Se añadió un try catch en el metodo cerrarLibro para capturar la excepcion en caso que el fichero data.dat no exita
 - Se arreglaron otros errores menores.
 - Se ha marcado el objecto libro como serializable para que se pueda serializar y deserializar el objecto
 - Se ha modificado el metodo modificarLibro añadiendo un nuevo parametro al metodo para poder buscar el libro antiguo y posteriormente borrarlo
