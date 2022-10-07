@@ -101,7 +101,12 @@ namespace PracticaCRUD.BBDD
             try
             {
                 comando = new MySqlCommand(sql, conexion);
+                
                 return comando.ExecuteNonQuery() > 0;
+            }
+            catch(MySqlException e)
+            {
+                return false;
             }
             catch (Exception ex)
             {

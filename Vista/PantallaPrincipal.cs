@@ -40,16 +40,15 @@ namespace LibreriaV3._1
             TLibro libro= RecogerDatosPantalla();           
             String sql = string.Format("INSERT INTO tlibro(Autor, Titulo, Tema, Paginas, Precio, Formatouno, Formatodos, Formatotres, Estado) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", libro.Autor, libro.Titulo, libro.Tema, libro.Paginas, libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres, libro.Estado);
             //
-            if (acceso.ejecutarUpdate(sql))
+            if (!acceso.ejecutarUpdate(sql))
             //if (acceso.ejecutarUpdate(UtilSQL.sqlInsertar(RecogerDatosPantalla())))               
             {
-                lstLibros.Items.Add(txtTitulo.Text);                
-                MessageBox.Show("Libro Creado Correctamente");
+                MessageBox.Show(Mensajes.MSG_YAEXISTE);
+                return;
+               
             }
-            else
-            {                
-                MessageBox.Show("Insercción no válida");
-            }
+            lstLibros.Items.Add(txtTitulo.Text);
+            MessageBox.Show(Mensajes.MSG_INSERTADO);
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -60,7 +59,13 @@ namespace LibreriaV3._1
             //sql=string.Format("UPDATE tlibro SET Autor='{0}',Titulo='{1}',Tema='{2}',Paginas='{3}',Precio='{4}',Formatouno='{5}',Formatodos='{6}',Formatotres='{7}',Estado='{8}' WHERE titulo = '{9}'", libro.Autor, libro.Titulo, libro.Tema, libro.Paginas, libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres, libro.Estado,titulo);
             //
             // Quitamos el Titulo de la sentencia UPDATE, para que no pueda ser modificado.
-            String sql=string.Format("UPDATE tlibro SET Autor='{0}',Tema='{1}',Paginas='{2}',Precio='{3}',Formatouno='{4}',Formatodos='{5}',Formatotres='{6}',Estado='{7}' WHERE titulo = '{8}'", libro.Autor, libro.Tema, libro.Paginas, libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres, libro.Estado,titulo);
+            String sql=string.Format("UPDATE tlibro SET Autor='{0}'," +
+                "Tema='{1}',Paginas='{2}',Precio='{3}',Formatouno='{4}'," +
+                "Formatodos='{5}',Formatotres='{6}',Estado='{7}'" +
+                " WHERE titulo = '{8}'", libro.Autor, libro.Tema, libro.Paginas,
+                libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres,
+                libro.Estado,titulo
+            );
             //
             if (acceso.ejecutarUpdate(sql))
             //if (acceso.ejecutarCRUD(UtilSQL.sqlModificar((((TLibro)lstLibros.SelectedItem).CodLibro), RecogerDatosPantalla())))
@@ -154,8 +159,7 @@ namespace LibreriaV3._1
          ******************************************************************************************/
         private TLibro RecogerDatosPantalla()
         {
-            TLibro libro = null;
-            string titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
+            String titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
             titulo = txtTitulo.Text;
             autor = txtAutor.Text;
             paginas = txtPaginas.Text;
@@ -165,7 +169,11 @@ namespace LibreriaV3._1
             formatoUno = chkCartone.Checked ? chkCartone.Text : "N/A";
             formatoDos = chkRustica.Checked ? chkRustica.Text : "N/A";
             formatoTres = chkTapaDura.Checked ? chkTapaDura.Text : "N/A";
-            tema = cbxTemas.SelectedItem.ToString();
+
+            tema = cbxTemas.SelectedItem == null
+                ? "N/A"
+                : cbxTemas.SelectedItem.ToString();
+
             if (rbNovedad.Checked)
             {
                 estado = "novedad";
@@ -175,11 +183,27 @@ namespace LibreriaV3._1
                 estado = "reedicion";
             }
 
-            if (titulo.Count() != 0 && paginas.Count() != 0 && titulo.Count() != 0 && precio.Count() != 0)
+            //Comprobaciones
+            if (titulo == "")
             {
-                libro = new TLibro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
+                MostrarMensaje(Mensajes.MSG_ERRCAMPO_Titulo);
+                return null;
             }
-            return libro;
+
+            /*if (!chkCartone.Checked && !chkRustica.Checked && !chkTapaDura.Checked)
+            {
+                MostrarMensaje("Es necesario rellenar el formato");
+                return null;
+            }*/
+
+            if (autor == "" || paginas.Length == 0 || precio.Length == 0)
+            {
+                MostrarMensaje(Mensajes.MSG_ERRCAMPOS_VACIO);
+                return null;
+            }
+
+            return new TLibro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
+
         }
         /*********************************************************************************************
 	     * Pasamos por parametro un libro y este método se encargará de mostrarnos en la parte gráfica
@@ -222,6 +246,11 @@ namespace LibreriaV3._1
             chkRustica.Checked = false;
             chkTapaDura.Checked = false;
             cbxTemas.SelectedIndex = 0;
-        }        
+        }
+        private void MostrarMensaje(string mensaje)
+        {
+            txtMensaje.Text = mensaje;
+            MessageBox.Show(mensaje);
+        }
     }
 }

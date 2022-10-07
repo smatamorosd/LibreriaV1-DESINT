@@ -62,8 +62,7 @@
     <Compile Include="Datos\Mapeo.cs" />
     <Compile Include="Datos\UtilSQL.cs" />
     <Compile Include="Lenguaje\Mensajes.cs" />
-    <Compile Include="Modelo\Estanteria.cs" />
-    <Compile Include="Modelo\Libro.cs" />
+    <Compile Include="Modelo\Error.cs" />
     <Compile Include="Modelo\TLibro.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
