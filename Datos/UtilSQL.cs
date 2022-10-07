@@ -18,7 +18,7 @@ namespace PracticaCRUD.BBDD
         public static string sqlBorrar(TLibro libro)
         {
 
-            return "DELETE FROM tlibro WHERE CodLibro = " + libro.CodLibro;
+            return "DELETE FROM tlibro WHERE CodLibro = " + libro.idLibro;
         }
 
         public static string sqlModificar(int id, TLibro libro)

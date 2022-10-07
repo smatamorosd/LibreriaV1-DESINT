@@ -171,7 +171,7 @@ namespace LibreriaV3._1
             formatoTres = chkTapaDura.Checked ? chkTapaDura.Text : "N/A";
 
             tema = cbxTemas.SelectedItem == null
-                ? "N/A"
+                ? cbxTemas.Items[0].ToString()
                 : cbxTemas.SelectedItem.ToString();
 
             if (rbNovedad.Checked)

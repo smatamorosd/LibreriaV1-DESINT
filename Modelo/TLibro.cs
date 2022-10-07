@@ -3,7 +3,8 @@ namespace LibreriaV3._1.Modelo
 {
     public class TLibro
     {
-        public string CodLibro { get; set; }
+        //public string CodLibro { get; set; }
+        public int idLibro { get; set; }
         public string Autor { get; set; }
         public string Titulo { get; set; }
         public string Tema { get; set; }
@@ -43,7 +44,7 @@ namespace LibreriaV3._1.Modelo
 
         public override string ToString()
         {
-            return CodLibro+": " + Titulo.ToUpper();
+            return idLibro+": " + Titulo.ToUpper();
         }
     }   
 }
