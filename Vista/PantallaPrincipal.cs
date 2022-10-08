@@ -1,34 +1,53 @@
-﻿using LibreriaV3._1.Modelo;
-using PracticaCRUD.BBDD;
+﻿using LibreriaV2.Datos;
+using LibreriaV2.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace LibreriaV3._1
+namespace LibreriaV2
 {
     public partial class PantallaPrincipal : Form
     {
-        AccesoBD acceso = new AccesoBD();
+        // Dejaremos los mensajes informativos lblMensaje. y MessageBox() para que el alumno
+        // compruebe la manera de enviar datos a pantalla. La mejor forma de gestionar los
+        // mensajes informativos es hacerlo como se indica en el desarrollo de este ejercicio, 
+        // crear la clase mensaje.
+        // En cuanto a la gestión de los errores, se controlan en la capa de presentación.
+        // Cuando se producen errores en la capa de datos, serán enviados mediante la orden throw
+        // a la capa superior(capa de presentación) para que sea gestionado.
+        // En este código no utilizaremos la clase Errores. Los errores serán gestionados directamente
+        // con la clase Exception. Si queremos hacer un control exhaustivo de los errores que va 
+        // produciendo la aplicación deberíamos codificar esta clase tal y como se ha realizado en los
+        // proyectos JAVA.
+
+        private AccesoLibro acceso = new AccesoLibro();
 
         public PantallaPrincipal()
         {
             InitializeComponent();
-        }              
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //
-            String sql = "SELECT * FROM tlibro";
-            List<object> libros = acceso.ejecutarConsulta(sql, new TLibro());
-            //List<object> libros = acceso.ejecutarConsulta(UtilSQL.sqlLeer(), new TLibro());            
-            //
-            foreach (TLibro libro in libros)
+            // Se podría crear un método privado en esta clase para realizar la carga de 
+            // los libros cargarLibros().
+            // Hemos optado por introducirlo en el Form_Load(), pero podría haberse cargado 
+            // en el constructor PantallaPrincipal().
+            // En la version5 se realiza el método privado y la carga se hace en el constructor.
+            try
             {
-                lstLibros.Items.Add(libro.Titulo);
+                List<object> libros = acceso.obtenerLibros();
+                foreach (TLibro libro in libros)
+                {
+                    lstLibros.Items.Add(libro.Titulo);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
-
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             VaciarPantalla();
@@ -36,96 +55,106 @@ namespace LibreriaV3._1
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-            // En este método falta la gestión de errores que proceden de AccesoBD     
-            TLibro libro= RecogerDatosPantalla();           
-            String sql = string.Format("INSERT INTO tlibro(Autor, Titulo, Tema, Paginas, Precio, Formatouno, Formatodos, Formatotres, Estado) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", libro.Autor, libro.Titulo, libro.Tema, libro.Paginas, libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres, libro.Estado);
-            //
-            if (!acceso.ejecutarUpdate(sql))
-            //if (acceso.ejecutarUpdate(UtilSQL.sqlInsertar(RecogerDatosPantalla())))               
+            try
             {
-                MessageBox.Show(Mensajes.MSG_YAEXISTE);
-                return;
-               
+                if (acceso.insertarLibro(RecogerDatosPantalla()))
+                {
+                    lstLibros.Items.Add(txtTitulo.Text);
+                    //lblMensaje.Text = "Libro Creado Correctamente";
+                    //MessageBox.Show("Libro Creado Correctamente");
+                    MessageBox.Show(Mensajes.MSG_INSERTADO);
+                }
+                else
+                {
+                    //lblMensaje.Text = "El libro ya existe";
+                    //MessageBox.Show("El libro ya existe");
+                    MessageBox.Show(Mensajes.MSG_YAEXISTE);
+                }
             }
-            lstLibros.Items.Add(txtTitulo.Text);
-            MessageBox.Show(Mensajes.MSG_INSERTADO);
-        }
-
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            //  
-            TLibro libro = RecogerDatosPantalla();
-            String titulo = lstLibros.SelectedItem.ToString();              
-            //sql=string.Format("UPDATE tlibro SET Autor='{0}',Titulo='{1}',Tema='{2}',Paginas='{3}',Precio='{4}',Formatouno='{5}',Formatodos='{6}',Formatotres='{7}',Estado='{8}' WHERE titulo = '{9}'", libro.Autor, libro.Titulo, libro.Tema, libro.Paginas, libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres, libro.Estado,titulo);
-            //
-            // Quitamos el Titulo de la sentencia UPDATE, para que no pueda ser modificado.
-            String sql=string.Format("UPDATE tlibro SET Autor='{0}'," +
-                "Tema='{1}',Paginas='{2}',Precio='{3}',Formatouno='{4}'," +
-                "Formatodos='{5}',Formatotres='{6}',Estado='{7}'" +
-                " WHERE titulo = '{8}'", libro.Autor, libro.Tema, libro.Paginas,
-                libro.Precio, libro.Formatouno, libro.Formatodos, libro.Formatotres,
-                libro.Estado,titulo
-            );
-            //
-            if (acceso.ejecutarUpdate(sql))
-            //if (acceso.ejecutarCRUD(UtilSQL.sqlModificar((((TLibro)lstLibros.SelectedItem).CodLibro), RecogerDatosPantalla())))
+            catch (Exception ex)
             {
-                //lstLibros.Items.Add(txtTitulo.Text);
-                MessageBox.Show("Libro Modificado Correctamente");                
-            }
-            else
-            {
-                MessageBox.Show("Modificación no válida");
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void btnBaja_Click(object sender, EventArgs e)
         {
-            //
-            String titulo = lstLibros.SelectedItem.ToString();                      
-            String sql = "DELETE FROM `tlibro` WHERE `titulo` = '" + titulo + "'";
-            //
-            if (acceso.ejecutarUpdate(sql))
-            //if (acceso.ejecutarCRUD(UtilSQL.sqlBorrar((TLibro)lstLibros.SelectedItem)))
+            try
             {
-                lstLibros.Items.Remove(lstLibros.SelectedItem.ToString());
-                MessageBox.Show("Libro Borrado Correctamente");
+                if (!(lstLibros.SelectedIndex == -1))
+                {
+                    if (acceso.borrarLibro(RecogerDatosPantalla()))
+                    {
+                        lstLibros.Items.Remove(lstLibros.SelectedItem.ToString());
+                        //lblMensaje.Text = "Libro Borrado Correctamente";
+                        //MessageBox.Show("Libro Borrado Correctamente");
+                        MessageBox.Show(Mensajes.MSG_BORRADO);
+                    }
+                    else
+                    {
+                        //lblMensaje.Text = "Libro no encontrado";
+                        //MessageBox.Show("Libro no encontrado");
+                        MessageBox.Show(Mensajes.MSG_NO_ENCONTRADO);
+                    }
+                    VaciarPantalla();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Borrado no válido");
+                MessageBox.Show(ex.Message);
             }
-            VaciarPantalla();            
         }
-       
+                
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (acceso.modificarLibro(RecogerDatosPantalla()))
+                {
+                    //lblMensaje.Text = "Libro Modificado Correctamente";
+                    //MessageBox.Show("Libro Modificado Correctamente");
+                    MessageBox.Show(Mensajes.MSG_MODIFICADO);
+                }
+                else
+                {
+                    //lblMensaje.Text = "Libro no encontrado";
+                    //MessageBox.Show("Libro no encontrado");
+                    MessageBox.Show(Mensajes.MSG_NO_ENCONTRADO);
+                }
+                //*****  Este código no es necesario. Lo dejamos por si necesitamos utilizarlo como documentación.
+                //*****  Tiene código que puede servirnos, por ejemplo, la carga de lstLibros mediante un DataSource.
+                //*****  El resto de código proviene de las versiones originales de Josema. Este código
+                //*****  lo hemos optimizado pero tiene órdenes que nos pueden servir.
+                //*****  se modifican los valores en la base de datos.
+                //this.DB.ejecutarCUD(UtilSQL.sqlModificar((((TLibro)lstLibros.SelectedItem).CodLibro), RecogerDatosPantalla()));
+                //lstLibros.DataSource = null;
+                //lstLibros.DataSource = this.DB.ejecutarConsulta(UtilSQL.sqlLeer(), new TLibro());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-        // Se deja este evento como documentación por si lo necesitamos
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+
+        private void lstLibros_SelectedIndexChanged(object sender, EventArgs e)
         {
-        }
-        // Se deja este evento como documentación por si lo necesitamos
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-        }
-        // Se deja este evento como documentación por si lo necesitamos
-        private void txtMensaje_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void lstLibros_Click(object sender, EventArgs e)
-        {
-            if (lstLibros.SelectedItem != null)
+            try
             {
-                String titulo = lstLibros.SelectedItem.ToString();               
-                String sql = "SELECT * FROM `tlibro` WHERE `titulo` = '" + titulo + "'";
-                TLibro libro = (TLibro)acceso.ejecutarConsulta(sql, new TLibro()).First();
-                //
-                //TLibro libro = (TLibro)acceso.ejecutarConsulta(UtilSQL.sqlBuscarLibro(lstLibros.SelectedItem.ToString()), new TLibro()).First();
-                EnviarDatosAPantalla(libro);
+                if (lstLibros.SelectedItem != null)
+                {
+                    EnviarDatosAPantalla((TLibro)acceso.buscarLibro(lstLibros.SelectedItem.ToString()));
+                }
             }
-        }       
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void txtPaginas_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -157,9 +186,11 @@ namespace LibreriaV3._1
          * Metodo para recoger los datos
          * Se encarga de montar un libro a través de los datos que introduces en la ventana gráfica
          ******************************************************************************************/
+
         private TLibro RecogerDatosPantalla()
         {
-            String titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
+            TLibro libro = null;
+            string titulo, autor, paginas, precio, formatoUno, formatoDos, formatoTres, estado, tema;
             titulo = txtTitulo.Text;
             autor = txtAutor.Text;
             paginas = txtPaginas.Text;
@@ -169,10 +200,9 @@ namespace LibreriaV3._1
             formatoUno = chkCartone.Checked ? chkCartone.Text : "N/A";
             formatoDos = chkRustica.Checked ? chkRustica.Text : "N/A";
             formatoTres = chkTapaDura.Checked ? chkTapaDura.Text : "N/A";
-
             tema = cbxTemas.SelectedItem == null
-                ? cbxTemas.Items[0].ToString()
-                : cbxTemas.SelectedItem.ToString();
+                     ? cbxTemas.Items[0].ToString()
+                     : cbxTemas.SelectedItem.ToString();
 
             if (rbNovedad.Checked)
             {
@@ -183,27 +213,11 @@ namespace LibreriaV3._1
                 estado = "reedicion";
             }
 
-            //Comprobaciones
-            if (titulo == "")
+            if (titulo.Count() != 0 && paginas.Count() != 0 && titulo.Count() != 0 && precio.Count() != 0)
             {
-                MostrarMensaje(Mensajes.MSG_ERRCAMPO_Titulo);
-                return null;
+                libro = new TLibro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
             }
-
-            /*if (!chkCartone.Checked && !chkRustica.Checked && !chkTapaDura.Checked)
-            {
-                MostrarMensaje("Es necesario rellenar el formato");
-                return null;
-            }*/
-
-            if (autor == "" || paginas.Length == 0 || precio.Length == 0)
-            {
-                MostrarMensaje(Mensajes.MSG_ERRCAMPOS_VACIO);
-                return null;
-            }
-
-            return new TLibro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
-
+            return libro;
         }
         /*********************************************************************************************
 	     * Pasamos por parametro un libro y este método se encargará de mostrarnos en la parte gráfica
@@ -231,9 +245,11 @@ namespace LibreriaV3._1
             chkRustica.Checked = sender.Formatodos.Equals("Rústica") ? true : false; ;
             chkTapaDura.Checked = sender.Formatotres.Equals("Tapa dura") ? true : false;
         }
+
         /*************************************************************************************
          * Método encargado de limpiar los campos de la pantalla
          * ***********************************************************************************/
+
         private void VaciarPantalla()
         {
             txtAutor.Text = "";
@@ -246,11 +262,6 @@ namespace LibreriaV3._1
             chkRustica.Checked = false;
             chkTapaDura.Checked = false;
             cbxTemas.SelectedIndex = 0;
-        }
-        private void MostrarMensaje(string mensaje)
-        {
-            txtMensaje.Text = mensaje;
-            MessageBox.Show(mensaje);
         }
     }
 }

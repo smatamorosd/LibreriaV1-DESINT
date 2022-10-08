@@ -1,4 +1,4 @@
-﻿namespace LibreriaV3._1
+﻿namespace LibreriaV2
 {
     partial class PantallaPrincipal
     {
@@ -91,7 +91,6 @@
             this.txtMensaje.Name = "txtMensaje";
             this.txtMensaje.Size = new System.Drawing.Size(232, 26);
             this.txtMensaje.TabIndex = 2;
-            this.txtMensaje.TextChanged += new System.EventHandler(this.txtMensaje_TextChanged);
             // 
             // txtTitulo
             // 
@@ -193,12 +192,11 @@
             this.cbxTemas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxTemas.FormattingEnabled = true;
             this.cbxTemas.Items.AddRange(new object[] {
-            "Accion",
-            "Informatica",
+            "Acción",
+            "Informática",
             "Aventura",
-            "Romantica",
-            "Tupidora",
-            "Ficion"});
+            "Romántica",
+            "Ficción"});
             this.cbxTemas.Location = new System.Drawing.Point(92, 153);
             this.cbxTemas.Margin = new System.Windows.Forms.Padding(2);
             this.cbxTemas.Name = "cbxTemas";
@@ -377,7 +375,7 @@
             this.lstLibros.Name = "lstLibros";
             this.lstLibros.Size = new System.Drawing.Size(226, 407);
             this.lstLibros.TabIndex = 17;
-            this.lstLibros.Click += new System.EventHandler(this.lstLibros_Click);
+            this.lstLibros.SelectedIndexChanged += new System.EventHandler(this.lstLibros_SelectedIndexChanged);
             // 
             // PantallaPrincipal
             // 
@@ -405,8 +403,6 @@
             this.Name = "PantallaPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Libros";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Formato.ResumeLayout(false);
             this.Formato.PerformLayout();

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace PracticaCRUD.BBDD
+namespace LibreriaV2.Datos
 {
     class Mapeo
     {

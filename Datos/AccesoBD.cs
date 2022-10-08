@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.Reflection;
 
-namespace PracticaCRUD.BBDD
+namespace LibreriaV2.Datos
 {
     public class AccesoBD
     {
@@ -45,6 +45,7 @@ namespace PracticaCRUD.BBDD
             {
                 throw;
             }
+
         }
 
         protected void cerrarConexion()
@@ -101,14 +102,9 @@ namespace PracticaCRUD.BBDD
             try
             {
                 comando = new MySqlCommand(sql, conexion);
-                
                 return comando.ExecuteNonQuery() > 0;
             }
-            catch(MySqlException e)
-            {
-                return false;
-            }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 throw;
             }
@@ -133,7 +129,7 @@ namespace PracticaCRUD.BBDD
                 {
                     Object obj = Activator.CreateInstance(objeto.GetType());
                     foreach (String nombre in nombrePropiedades)
-                    {                        
+                    {
                         String valor = dataReader[nombre].ToString();
                         PropertyInfo propiedad = obj.GetType().GetProperty(nombre);
                         propiedad.SetValue(obj, Convert.ChangeType(valor, propiedad.PropertyType), null);
@@ -153,8 +149,12 @@ namespace PracticaCRUD.BBDD
             return objetos;
         }
 
-        // Esta orden de ejecutarConsulta(), no la utilizaremos. La dejaremos como documentación.
-        public Object ejecutarConsulta(String sql)
+        //*******************************************************************************************************************
+        // Este método no se utiliza ya que ExecuteScalar() devuelve el valor de la primera columna de la tabla.
+        // Nuestro objetivo es devolver todos las columnas de la tabla y cargar objetos. Se usa mejor DataReader
+        //*******************************************************************************************************************
+       
+        /*public object ejecutarConsulta(String sql)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace PracticaCRUD.BBDD
             {
                 cerrarConexion();
             }
-        }
+        }*/
 
     }
 }

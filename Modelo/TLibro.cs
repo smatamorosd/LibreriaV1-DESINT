@@ -1,10 +1,9 @@
 ﻿
-namespace LibreriaV3._1.Modelo
+namespace LibreriaV2.Modelo
 {
     public class TLibro
     {
-        //public string CodLibro { get; set; }
-        public int idLibro { get; set; }
+        public string idLibro { get; set; }
         public string Autor { get; set; }
         public string Titulo { get; set; }
         public string Tema { get; set; }
@@ -46,5 +45,9 @@ namespace LibreriaV3._1.Modelo
         {
             return idLibro+": " + Titulo.ToUpper();
         }
-    }   
+
+    }
+
+    
+
 }
