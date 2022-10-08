@@ -1,11 +1,11 @@
-﻿using LibreriaV2.Modelo;
+﻿using LibreriaV4.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibreriaV2.Datos
+namespace LibreriaV4.Datos
 {
   public class AccesoLibro : AccesoBD , IAcceso<TLibro> {
 

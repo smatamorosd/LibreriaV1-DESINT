@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LibreriaV2.Datos
+namespace LibreriaV4.Datos
 {
     interface IAcceso<obj>
     {

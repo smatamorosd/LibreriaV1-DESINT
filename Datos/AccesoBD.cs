@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.Reflection;
 
-namespace LibreriaV2.Datos
+namespace LibreriaV4.Datos
 {
     public class AccesoBD
     {

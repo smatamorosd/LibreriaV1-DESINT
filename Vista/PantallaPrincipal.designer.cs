@@ -1,4 +1,4 @@
-﻿namespace LibreriaV2
+﻿namespace LibreriaV4
 {
     partial class PantallaPrincipal
     {

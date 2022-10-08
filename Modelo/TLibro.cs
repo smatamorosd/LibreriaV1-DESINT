@@ -1,5 +1,5 @@
 ﻿
-namespace LibreriaV2.Modelo
+namespace LibreriaV4.Modelo
 {
     public class TLibro
     {

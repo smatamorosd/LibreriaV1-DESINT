@@ -1,11 +1,11 @@
-﻿using LibreriaV2.Datos;
-using LibreriaV2.Modelo;
+﻿using LibreriaV4.Datos;
+using LibreriaV4.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace LibreriaV2
+namespace LibreriaV4
 {
     public partial class PantallaPrincipal : Form
     {
@@ -107,32 +107,35 @@ namespace LibreriaV2
                 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            try
+            if(lstLibros.SelectedItems != null && lstLibros.SelectedItems.Count != 0)
             {
-                if (acceso.modificarLibro(RecogerDatosPantalla()))
+                try
                 {
-                    //lblMensaje.Text = "Libro Modificado Correctamente";
-                    //MessageBox.Show("Libro Modificado Correctamente");
-                    MessageBox.Show(Mensajes.MSG_MODIFICADO);
+                    if (acceso.modificarLibro(RecogerDatosPantalla()))
+                    {
+                        //lblMensaje.Text = "Libro Modificado Correctamente";
+                        //MessageBox.Show("Libro Modificado Correctamente");
+                        MessageBox.Show(Mensajes.MSG_MODIFICADO);
+                    }
+                    else
+                    {
+                        //lblMensaje.Text = "Libro no encontrado";
+                        //MessageBox.Show("Libro no encontrado");
+                        MessageBox.Show(Mensajes.MSG_NO_ENCONTRADO);
+                    }
+                    //*****  Este código no es necesario. Lo dejamos por si necesitamos utilizarlo como documentación.
+                    //*****  Tiene código que puede servirnos, por ejemplo, la carga de lstLibros mediante un DataSource.
+                    //*****  El resto de código proviene de las versiones originales de Josema. Este código
+                    //*****  lo hemos optimizado pero tiene órdenes que nos pueden servir.
+                    //*****  se modifican los valores en la base de datos.
+                    //this.DB.ejecutarCUD(UtilSQL.sqlModificar((((TLibro)lstLibros.SelectedItem).CodLibro), RecogerDatosPantalla()));
+                    //lstLibros.DataSource = null;
+                    //lstLibros.DataSource = this.DB.ejecutarConsulta(UtilSQL.sqlLeer(), new TLibro());
                 }
-                else
+                catch (Exception ex)
                 {
-                    //lblMensaje.Text = "Libro no encontrado";
-                    //MessageBox.Show("Libro no encontrado");
-                    MessageBox.Show(Mensajes.MSG_NO_ENCONTRADO);
+                    MessageBox.Show(ex.Message);
                 }
-                //*****  Este código no es necesario. Lo dejamos por si necesitamos utilizarlo como documentación.
-                //*****  Tiene código que puede servirnos, por ejemplo, la carga de lstLibros mediante un DataSource.
-                //*****  El resto de código proviene de las versiones originales de Josema. Este código
-                //*****  lo hemos optimizado pero tiene órdenes que nos pueden servir.
-                //*****  se modifican los valores en la base de datos.
-                //this.DB.ejecutarCUD(UtilSQL.sqlModificar((((TLibro)lstLibros.SelectedItem).CodLibro), RecogerDatosPantalla()));
-                //lstLibros.DataSource = null;
-                //lstLibros.DataSource = this.DB.ejecutarConsulta(UtilSQL.sqlLeer(), new TLibro());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
 
