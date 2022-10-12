@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LibreriaV4.Modelo
+
+namespace LibreriaV5_Final.Comun
 {
     class Errores : Exception
     {
@@ -18,3 +15,4 @@ namespace LibreriaV4.Modelo
     }
 
 }
+

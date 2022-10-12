@@ -1,6 +1,6 @@
-﻿namespace LibreriaV4
+﻿namespace LibreriaV5_Final
 {
-    partial class PantallaPrincipal
+    partial class Libro
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -63,11 +63,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Stencil", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(45, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(251, 55);
+            this.label1.Size = new System.Drawing.Size(255, 57);
             this.label1.TabIndex = 0;
             this.label1.Text = "LIBRERIA";
             // 
@@ -140,7 +140,7 @@
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(242, 26);
             this.txtPrecio.TabIndex = 8;
-            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
+            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
             // 
             // label5
             // 
@@ -162,7 +162,7 @@
             this.txtPaginas.Name = "txtPaginas";
             this.txtPaginas.Size = new System.Drawing.Size(242, 26);
             this.txtPaginas.TabIndex = 10;
-            this.txtPaginas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPaginas_KeyPress);
+            this.txtPaginas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPaginas_KeyPress);
             // 
             // label6
             // 
@@ -191,12 +191,6 @@
             this.cbxTemas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTemas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxTemas.FormattingEnabled = true;
-            this.cbxTemas.Items.AddRange(new object[] {
-            "Acción",
-            "Informática",
-            "Aventura",
-            "Romántica",
-            "Ficción"});
             this.cbxTemas.Location = new System.Drawing.Point(92, 153);
             this.cbxTemas.Margin = new System.Windows.Forms.Padding(2);
             this.cbxTemas.Name = "cbxTemas";
@@ -318,7 +312,7 @@
             this.btnSalir.TabIndex = 4;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
             // btnModificar
             // 
@@ -330,7 +324,7 @@
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            this.btnModificar.Click += new System.EventHandler(this.BtnModificar_Click);
             // 
             // btnBaja
             // 
@@ -342,7 +336,7 @@
             this.btnBaja.TabIndex = 2;
             this.btnBaja.Text = "Baja";
             this.btnBaja.UseVisualStyleBackColor = true;
-            this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
+            this.btnBaja.Click += new System.EventHandler(this.BtnBaja_Click);
             // 
             // btnNuevo
             // 
@@ -354,7 +348,7 @@
             this.btnNuevo.TabIndex = 1;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
-            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // btnAlta
             // 
@@ -366,7 +360,7 @@
             this.btnAlta.TabIndex = 0;
             this.btnAlta.Text = "Alta";
             this.btnAlta.UseVisualStyleBackColor = true;
-            this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
+            this.btnAlta.Click += new System.EventHandler(this.BtnAlta_Click);
             // 
             // lstLibros
             // 
@@ -375,9 +369,9 @@
             this.lstLibros.Name = "lstLibros";
             this.lstLibros.Size = new System.Drawing.Size(226, 407);
             this.lstLibros.TabIndex = 17;
-            this.lstLibros.SelectedIndexChanged += new System.EventHandler(this.lstLibros_SelectedIndexChanged);
+            this.lstLibros.SelectedIndexChanged += new System.EventHandler(this.LstLibros_SelectedIndexChanged);
             // 
-            // PantallaPrincipal
+            // Libro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -400,10 +394,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "PantallaPrincipal";
+            this.Name = "Libro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Libros";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Formato.ResumeLayout(false);
             this.Formato.PerformLayout();
             this.Estado.ResumeLayout(false);

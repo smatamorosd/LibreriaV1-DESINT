@@ -58,22 +58,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Datos\AccesoBD.cs" />
-    <Compile Include="Datos\AccesoLibro.cs" />
-    <Compile Include="Datos\Mapeo.cs" />
-    <Compile Include="Datos\UtilSQL.cs" />
-    <Compile Include="Lenguaje\Mensajes.cs" />
-    <Compile Include="Modelo\Errores.cs" />
-    <Compile Include="Modelo\Mensajes.cs" />
-    <Compile Include="Modelo\TLibro.cs" />
+    <Compile Include="Comun\Errores.cs" />
+    <Compile Include="Comun\Mensajes.cs" />
+    <Compile Include="Negocio\ControlAccesoDAO.cs" />
+    <Compile Include="Negocio\TCliente.cs" />
+    <Compile Include="Negocio\TFactura.cs" />
+    <Compile Include="Negocio\TLibro.cs" />
+    <Compile Include="Negocio\TLineaFactura.cs" />
+    <Compile Include="Negocio\TTema.cs" />
+    <Compile Include="Persistencia\AccesoBD.cs" />
+    <Compile Include="Persistencia\AccesoDAO.cs" />
+    <Compile Include="Persistencia\ConexionJDBC.cs" />
+    <Compile Include="Persistencia\IAcceso.cs" />
+    <Compile Include="Persistencia\UtilFichero.cs" />
+    <Compile Include="Persistencia\UtilSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Modelo\IAcceso.cs" />
-    <Compile Include="Vista\PantallaPrincipal.cs">
+    <Compile Include="Vista\FrmConsultarFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vista\PantallaPrincipal.designer.cs">
-      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
+    <Compile Include="Vista\FrmConsultarFacturas.designer.cs">
+      <DependentUpon>FrmConsultarFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\FrmInsertarFacturas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\FrmInsertarFacturas.designer.cs">
+      <DependentUpon>FrmInsertarFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\FrmLibro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\FrmLibro.designer.cs">
+      <DependentUpon>FrmLibro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\FrmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\FrmPrincipal.designer.cs">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -84,8 +107,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Vista\PantallaPrincipal.resx">
-      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
+    <EmbeddedResource Include="Vista\FrmConsultarFacturas.resx">
+      <DependentUpon>FrmConsultarFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FrmInsertarFacturas.resx">
+      <DependentUpon>FrmInsertarFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FrmLibro.resx">
+      <DependentUpon>FrmLibro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FrmPrincipal.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
