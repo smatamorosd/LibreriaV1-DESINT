@@ -47,8 +47,8 @@ namespace LibreriaV5_Final.Vista
         private void Principal_FormClosed(object sender, FormClosedEventArgs e)
         {
             try { 
-            UtilFichero.EscribirDictionarySentenciasFichero();
-            ConexionJDBC.CerrarConexion();
+                UtilFichero.EscribirDictionarySentenciasFichero();
+                ConexionJDBC.CerrarConexion();
             }
             catch (Exception ex)
             {

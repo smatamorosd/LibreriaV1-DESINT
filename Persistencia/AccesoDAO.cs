@@ -157,32 +157,29 @@ namespace LibreriaV5_Final.Persistencia
 
             StartTransaction();
             string sql;
-            if ((sql = UtilFichero.ExisteSentencia("INSERTAR" + objeto.GetType().Name)) == null)
+
+            try
             {
-                try
+                //Si no existe el archivo de "CACHÉ"...
+                if ((sql = UtilFichero.ExisteSentencia("INSERTAR" + objeto.GetType().Name)) == null)
                 {
                     if (EjecutarUpdate(UtilFichero.GuardarSQL("INSERTAR" + objeto.GetType().Name, UtilSQL.SqlInsertar(objeto)), objeto))
                     {
                         Commit();
                         insertado = true;
                     }
+                    return insertado;
                 }
-                catch (Exception) { RollBack(); throw; }
-            }
-            else
-            {
-                try
-                {
-                    if (EjecutarUpdate(sql, objeto))
-                    {
-                        Commit();
-                        insertado = true;
-                    }
-                }
-                catch (Exception) { RollBack(); throw; }
-            }
-            return insertado;
 
+                if (EjecutarUpdate(sql, objeto))
+                {
+                    Commit();
+                    insertado = true;
+                }
+
+            } catch (Exception) { RollBack(); throw; }
+            
+            return insertado;
         }
   
         public bool Modificar(T objeto)
@@ -190,30 +187,29 @@ namespace LibreriaV5_Final.Persistencia
             bool modificado = false;
             StartTransaction();
             string sql;
-            if ((sql = UtilFichero.ExisteSentencia("UPDATE" + objeto.GetType().Name)) == null)
+            Console.WriteLine("Nombre de la clase del objeto: " + objeto.GetType().Name);
+
+            try
             {
-                try
+                //Si no existe la "CACHÉ"...
+                if ((sql = UtilFichero.ExisteSentencia("UPDATE" + objeto.GetType().Name)) == null)
                 {
                     if (EjecutarUpdate(UtilFichero.GuardarSQL("UPDATE" + objeto.GetType().Name, UtilSQL.SqlModificar(objeto)), objeto))
                     {
                         Commit();
                         modificado = true;
                     }
+
+                    return modificado;
                 }
-                catch (Exception) { RollBack(); throw; }
-            }
-            else
-            {
-                try
+
+                //Si existe una caché, la recogemos y la ejecutamos...
+                if (EjecutarUpdate(sql, objeto))
                 {
-                    if (EjecutarUpdate(sql, objeto))
-                    {
-                        Commit();
-                        modificado = true;
-                    }
+                    Commit();
+                    modificado = true;
                 }
-                catch (Exception) { RollBack(); throw; }
-            }
+            } catch (Exception) { RollBack(); throw; }
 
             return modificado;
         }

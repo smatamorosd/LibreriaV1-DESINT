@@ -59,30 +59,34 @@ namespace LibreriaV5_Final
         {
             try
             {
-                if (lstLibros.SelectedItem != null)
-                {
-                    var result = MessageBox.Show(Mensajes.MSG_PREGUNTA_BORRAR, Mensajes.MSG_ATENCION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Asterisk);
-                    //Borrado virtual
-                    if (result == DialogResult.Yes)
-                    {
-                        if (control.BorradoVirtual(lstLibros.SelectedItem))
-                        {
-                            txtMensaje.Text = Mensajes.MSG_BORRADO_VIRTUAL;
-                            lstLibros.Items.Remove(lstLibros.SelectedItem);
-                        }
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        if (control.Borrar(lstLibros.SelectedItem))
-                        {
-                            txtMensaje.Text = Mensajes.MSG_BORRADO_LIBRO;
-                            lstLibros.Items.Remove(lstLibros.SelectedItem);
-                        }
-                    }
-                }
-                else
+                if (lstLibros.SelectedItem == null)
                 {
                     MessageBox.Show(Mensajes.MSG_SELECCIONAR_LIBRO);
+                    return;
+                }
+
+                var result = MessageBox.Show(Mensajes.MSG_PREGUNTA_BORRAR,
+                    Mensajes.MSG_ATENCION,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Asterisk
+                );
+
+                //Borrado virtual
+                if (result == DialogResult.Yes)
+                {
+                    if (control.BorradoVirtual(lstLibros.SelectedItem))
+                    {
+                        txtMensaje.Text = Mensajes.MSG_BORRADO_VIRTUAL;
+                        lstLibros.Items.Remove(lstLibros.SelectedItem);
+                    }
+                }
+                else if (result == DialogResult.No)
+                {
+                    if (control.Borrar(lstLibros.SelectedItem))
+                    {
+                        txtMensaje.Text = Mensajes.MSG_BORRADO_LIBRO;
+                        lstLibros.Items.Remove(lstLibros.SelectedItem);
+                    }
                 }
             }
             catch (Exception ex)
@@ -96,20 +100,21 @@ namespace LibreriaV5_Final
             try
             {
                 TLibro libro = RecogerDatosPantalla();
-                if (libro != null)
-                {
-                    libro.Borrado = ((TLibro)lstLibros.SelectedItem).Borrado;
-                    if (control.Modificar(libro))
-                    {
-                        lstLibros.Items.Remove(lstLibros.SelectedItem);
-                        lstLibros.Items.Add(libro);
-                        txtMensaje.Text = Mensajes.MSG_MODIFICADO_LIBRO;
-                        VaciarPantalla();
-                    }
-                }
-                else
+
+                if (libro == null)
                 {
                     MessageBox.Show(Mensajes.MSG_CAMPOSVACIOS);
+                    return;
+                }
+
+                libro.Borrado = ((TLibro)lstLibros.SelectedItem).Borrado;
+                Console.WriteLine(libro.Borrado);
+                if (control.Modificar(libro))
+                {
+                    lstLibros.Items.Remove(lstLibros.SelectedItem);
+                    lstLibros.Items.Add(libro);
+                    txtMensaje.Text = Mensajes.MSG_MODIFICADO_LIBRO;
+                    VaciarPantalla();
                 }
             }
             catch (Exception ex)
@@ -270,7 +275,7 @@ namespace LibreriaV5_Final
 
             chkCartone.Checked = sender.Formatouno.Equals("Cartoné") ? true : false;
             chkRustica.Checked = sender.Formatodos.Equals("Rústica") ? true : false; ;
-            chkTapaDura.Checked = sender.Formatotres.Equals("Tapa dura") ? true : false; ;
+            chkTapaDura.Checked = sender.Formatotres.Equals("Tapa dura") ? true : false;
         }
     }
 }

@@ -35,9 +35,9 @@ namespace LibreriaV5_Final.Persistencia
                 int index = 1;
 
                 if (sql.Contains("DELETE"))
-                    {
+                {
                     comando.Parameters.AddWithValue("@1", propertyInfo[0].GetValue(objeto));
-                    }
+                }
                 else
                 {
                     for (int i = 0; i < propertyInfo.Length; i++)

@@ -33,19 +33,20 @@ namespace LibreriaV5_Final.Comun
         {
             try
             {
-                if (ComprobarArchivo() && File.ReadAllLines(ruta).Count() > 0)
-                {
-                    using (var stream = File.OpenRead(ruta))
-                    {
-                        SENTENCIAS = (Dictionary<string, string>)serializer.Deserialize(stream);
-                        stream.Close();
-                    }
-
-                }
-                else
+                //Si el archivo no se ha creado o está vacío...
+                if (!ComprobarArchivo() || File.ReadAllLines(ruta).Count() == 0)
                 {
                     SENTENCIAS = new Dictionary<string, string>();
+                    return;
                 }
+
+                //Leemos el fichero y añadimos los datos al diccionario...
+                using (var stream = File.OpenRead(ruta))
+                {
+                    SENTENCIAS = (Dictionary<string, string>)serializer.Deserialize(stream);
+                    stream.Close();
+                }
+
             }
             catch (Exception) { throw; }
         }
@@ -68,16 +69,18 @@ namespace LibreriaV5_Final.Comun
 
         private static bool ComprobarArchivo()
         {
-            bool existe = false;
+            bool existe = true;
             if (!File.Exists(ruta))
             {
                 try
                 {
                     File.Create(ruta).Close();
-                    existe = true;
+                    existe = false;
                 }
-                catch
+                catch(IOException ex)
                 {
+                    Console.WriteLine("Excepción al grabar los ficheros: " + ex.Message);
+                    existe = false;
                     // Se deja esta línea para ver cómo se gestionarían los distintos
                     // errores en una clase Errores.
                     //Errores.controlError(new Errores(Errores.ERROR_FICHERO));
