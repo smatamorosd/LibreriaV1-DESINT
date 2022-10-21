@@ -1,6 +1,6 @@
 ﻿namespace LibreriaV5_Final
 {
-    partial class Libro
+    partial class FrmLibro
     {
         /// <summary>
         /// Variable del diseñador necesaria.

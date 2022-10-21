@@ -24,7 +24,7 @@ namespace LibreriaV5_Final.Vista
         //TODO: Todas las excepciones al formulario
         private void LibrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Libro().ShowDialog(this);
+            new FrmLibro().ShowDialog(this);
         }
 
         private void InsertarToolStripMenuItem_Click(object sender, EventArgs e)

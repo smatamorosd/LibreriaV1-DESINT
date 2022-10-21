@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace LibreriaV5_Final
 { 
-    public partial class Libro : Form
+    public partial class FrmLibro : Form
     {
         private ControlAccesoDAO<object> control = new ControlAccesoDAO<object>();
 
-        public Libro()
+        public FrmLibro()
         {
             InitializeComponent();
             ObtenerTemas();
@@ -192,9 +192,10 @@ namespace LibreriaV5_Final
 
             if (titulo.Count() != 0 && paginas.Count() != 0 && titulo.Count() != 0 && precio.Count() != 0)
             {
+                //Comprobamos si no hemos seleccionado un item, que en este caso es cuando damos un alta.
                 if (((TLibro)lstLibros.SelectedItem) == null)
                     libro = new TLibro(autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
-                else
+                else //Entra cuando modificamos un libro
                 {
                     codLibro = ((TLibro)lstLibros.SelectedItem).CodLibro;
                     libro = new TLibro(codLibro, autor, titulo, tema, paginas, precio, formatoUno, formatoDos, formatoTres, estado);
