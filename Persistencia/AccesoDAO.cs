@@ -14,18 +14,18 @@ namespace LibreriaV5_Final.Persistencia
             string sql;
             // Ver si se puede mejorar sin necesidad de recorrer todas las propiedades del objeto
             // Tener en cuenta, que el campo con el nombre Borrado lo tendrán todas las tablas.
-            List<String> props = UtilSQL.ObtenerNombrePropiedades(objeto.GetType());
+            PropertyInfo[] props = UtilSQL.ObtenerNombrePropiedades(objeto.GetType());
 
-            //Nos situamos en el ultimo objeto del array
-            //props[props.Count - 1] = new PropertyInfo().SetValue(objeto, "1");
+            //Nos situamos en la ultima posición del array
+            props[props.Length -1].SetValue(objeto, "1");
 
-            foreach (var item in objeto.GetType().GetProperties())
+            /*foreach (var item in objeto.GetType().GetProperties())
             {
                 if (item.Name.Contains("Borra"))
                 {
                     item.SetValue(objeto, "1");
                 }
-            }
+            }*/
 
             try
             {

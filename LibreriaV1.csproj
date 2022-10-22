@@ -68,7 +68,6 @@
     <Compile Include="Negocio\TTema.cs" />
     <Compile Include="Persistencia\AccesoBD.cs" />
     <Compile Include="Persistencia\AccesoDAO.cs" />
-    <Compile Include="Persistencia\ConexionJDBC.cs" />
     <Compile Include="Persistencia\IAcceso.cs" />
     <Compile Include="Persistencia\UtilFichero.cs" />
     <Compile Include="Persistencia\UtilSQL.cs" />

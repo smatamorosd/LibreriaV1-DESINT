@@ -29,6 +29,8 @@ namespace LibreriaV5_Final
             TLibro libro;
             try
             {
+                lstLibros.ClearSelected();
+
                 if ((libro = RecogerDatosPantalla()) == null)
                 {
                     MessageBox.Show(Mensajes.MSG_CAMPOSVACIOS);
@@ -46,7 +48,6 @@ namespace LibreriaV5_Final
                         txtMensaje.Text = Mensajes.MSG_INSERTADO_LIBRO;
                     }
                 }
-                lstLibros.ClearSelected();
             }
             catch (Exception ex)
             {

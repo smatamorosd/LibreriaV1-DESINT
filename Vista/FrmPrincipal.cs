@@ -1,7 +1,7 @@
 ﻿using LibreriaV5_Final.Comun;
-using LibreriaV5_Final.Persistencia;
 using System;
 using System.Windows.Forms;
+using static LibreriaV5_Final.Persistencia.AccesoBD;
 
 namespace LibreriaV5_Final.Vista
 {

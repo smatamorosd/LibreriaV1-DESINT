@@ -39,7 +39,7 @@ namespace LibreriaV5_Final.Persistencia
             int index = 1;
             foreach (var item in ObtenerNombrePropiedades(objeto.GetType()))
             {
-                sql.Append(item+" = @" + (index++) + " , ");
+                sql.Append(item.Name + " = @" + (index++) + " , ");
             }
             sql.Remove(sql.Length - 2, 2);
             sql.Append("WHERE " + obtenerClave(objeto.GetType()) + " = @" + index);
@@ -56,15 +56,9 @@ namespace LibreriaV5_Final.Persistencia
         /*
          * Se obtiene una lista con el nombre de las propiedades para, posteriormente, hacer el set
          */
-        public static List<string> ObtenerNombrePropiedades(Type clase)
+        public static PropertyInfo[] ObtenerNombrePropiedades(Type clase)
         {
-            List<string> lista = new List<string>();
-            //Recorremos las propiedades y almacenamos el nombre
-            foreach (PropertyInfo propiedad in clase.GetProperties())
-            {
-                lista.Add(propiedad.Name);
-            }
-            return lista;
+            return clase.GetProperties();
         }
         
         public static string GenerarCodigo(Type clase)
@@ -88,13 +82,13 @@ namespace LibreriaV5_Final.Persistencia
         //
         //********** MÉTODOS PRIVADOS DE LA CLASE UtilSQL*************************
         //
-        private static void RellenarSql(List<string> list)
+        private static void RellenarSql(PropertyInfo[] list)
         {
             StringBuilder cadena = new StringBuilder(" ) VALUES ( ");
             int index = 1;
-            foreach (string item in list)
+            foreach (PropertyInfo item in list)
             {
-                sql.Append(item + ", ");
+                sql.Append(item.Name + ", ");
                 cadena.Append("@" + (index++) + " , ");
             }
             sql.Remove(sql.Length - 2, 2);
@@ -105,9 +99,9 @@ namespace LibreriaV5_Final.Persistencia
         {
             foreach (var item in ObtenerNombrePropiedades(clase))
             {
-                if (item.StartsWith("Cod"))
+                if (item.Name.ToString().StartsWith("Cod"))
                 {
-                    return item;
+                    return item.Name;
                 }
             }
             return null;

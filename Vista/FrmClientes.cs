@@ -19,6 +19,7 @@ namespace LibreriaV5_Final.Vista
         private void BtnAlta_Click(object sender, EventArgs e)
         {
             //Recoger los datos del formulario
+            lstClientes.SelectedIndex = -1;
             TCliente cliente = recogerDatosForm();
             if(cliente == null)
             {
@@ -48,12 +49,12 @@ namespace LibreriaV5_Final.Vista
         private void BtnBaja_Click(object sender, EventArgs e)
         {
 
-            if(lstClientes.SelectedItem != null 
-                && controlAccesoDAO.BorradoVirtual(lstClientes.SelectedItem))
+            if(lstClientes.SelectedItem != null)
             {
+                controlAccesoDAO.BorradoVirtual(lstClientes.SelectedItem);
+
                 MessageBox.Show(Mensajes.MSG_BORRADO_CLIENTE);
                 lstClientes.Items.Remove(lstClientes.SelectedItem);
-
                 limpiarPantalla();
             }
 
@@ -104,12 +105,13 @@ namespace LibreriaV5_Final.Vista
                 return null;
             }
 
-            //Comprobamos que si es null, significa que vamos a modificar.
+            //Si NO hay ningun cliente seleccionado es un alta.
             if( ((TCliente)lstClientes.SelectedItem) == null)
             {
                 return new TCliente(nombre, apellidos, DNI,direccion,email);
             }
 
+            //Si hay un cliente seleccionado es una modificacion, recogemos su ID
             String codCliente = ((TCliente)lstClientes.SelectedItem).CodCliente;
             return new TCliente(codCliente, nombre, apellidos, DNI, direccion, email, "0");
 
