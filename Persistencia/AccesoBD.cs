@@ -29,6 +29,7 @@ namespace LibreriaV5_Final.Persistencia
         {
             try
             {
+                StartTransaction();
                 //"SELECT * FROM admin WHERE admin_username=@val1 AND admin_password=PASSWORD(@val2)"
                 comando = new MySqlCommand(sql, connection); ///Esto es como preparedStatement
                 PropertyInfo[] propertyInfo = objeto.GetType().GetProperties();
@@ -49,9 +50,9 @@ namespace LibreriaV5_Final.Persistencia
                         comando.Parameters.AddWithValue("@" + index, propertyInfo[0].GetValue(objeto));
                     }
                 }
-
+                Commit();
             }
-            catch (Exception) { throw; }
+            catch (Exception) { RollBack(); throw; }
             return comando.ExecuteNonQuery() > 0;
         }
 
