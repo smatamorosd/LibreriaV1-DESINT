@@ -79,6 +79,7 @@ namespace LibreriaV5_Final.Persistencia
                             object obj = Activator.CreateInstance(clase);
                             foreach (PropertyInfo name in list)
                             {
+                                //Cogemos el valor del campo leido
                                 string valor = (String)sqlDataReader[name.Name].ToString();
                                 name.SetValue(obj, Convert.ChangeType(valor, name.PropertyType), null);
 

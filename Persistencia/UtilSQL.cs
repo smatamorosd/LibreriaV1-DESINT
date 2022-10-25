@@ -97,14 +97,16 @@ namespace LibreriaV5_Final.Persistencia
 
         private static string obtenerClave(Type clase)
         {
-            foreach (var item in ObtenerNombrePropiedades(clase))
+            //Recogemos el nombre de la clase quitandole la T...
+            return "Cod"+clase.Name.Substring(1);
+            /*foreach (var item in ObtenerNombrePropiedades(clase))
             {
                 if (item.Name.ToString().StartsWith("Cod"))
                 {
                     return item.Name;
                 }
             }
-            return null;
+            return null;*/
         }
 
     }
